@@ -1,0 +1,14 @@
+{
+  "name": "swa_backend",
+  "version": "1.0.0",
+  "description": "Backend for my Simple Weather App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chine Anikwe",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
