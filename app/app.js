@@ -32,7 +32,7 @@ app.post('/weather', (req, res) => {
     case 'location':
       fetch.getByCity(req.body.query)
       .then(resp => {
-        console.log('No errors here')
+        console.log('Location case hit. No errors here')
         res.send(resp)
       })
       .catch(console.log)
@@ -40,14 +40,14 @@ app.post('/weather', (req, res) => {
     case 'coordinates':
       fetch.getByLatLon(req.body.query.lat, req.body.query.lon)
       .then(resp => {
-        console.log('No errors here')
+        console.log('Coordinates case hit. No errors here')
         res.send(resp)
       })
       .catch(console.log)
       break
     default:
       console.log(req.body)
-      res.send({msg: 'sorry, nothing to see here'})
+      res.send({msg: 'Case statements not hit. Nothing to see here'})
   }
 })
 
@@ -56,7 +56,7 @@ app.get('/weather/:location', (req, res) => {
   console.log('Hit my query route!')
   fetch.getByCity(req.params.location)
   .then(resp => {
-    console.log('No errors here')
+    console.log('/weather/:location route hit. No errors here')
     res.send(resp)
   })
   .catch(console.log)
@@ -67,7 +67,7 @@ app.get('/weather/:lat/:lon', (req, res) => {
   console.log('lat/lon route')
   fetch.getByLatLon(req.params.lat, req.params.lon)
   .then(resp => {
-    console.log('No errors here')
+    console.log('/weather/:lat/:lon route hit. No errors here')
     res.send(resp)
   })
   .catch(console.log)
