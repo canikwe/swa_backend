@@ -9,19 +9,19 @@ fetch.promise = Bluebird
 dotenv.config()
 
 // Base URL for weather API fetch calls
-const baseURL = 'http://api.openweathermap.org/data/2.5/weather?'
+const baseURL = 'http://api.openweathermap.org/data/2.5/weather'
 
 export const getByCity = location => {
-  return fetch(baseURL + `q=${location}&` + 'APPID=' + process.env.OWM_API_KEY)
-    .then(resp => resp.json())
+  return fetch(baseURL + `?q=${location}&` + 'APPID=' + process.env.WEATHER_API_KEY)
+  .then(resp => resp.json())
 }
 
 export const getByLatLon = (lat, lon) => {
-    return fetch(baseURL + `lat=${lat}&lon=${lon}&` + 'APPID=' + process.env.OWM_API_KEY)
-      .then(resp => resp.json())
+  return fetch(baseURL + `?lat=${lat}&lon=${lon}&` + 'APPID=' + process.env.WEATHER_API_KEY)
+  .then(resp => resp.json())
 }
 
 export const getByCityId = (id) => {
-      return fetch(baseURL + `id=${id}&` + 'APPID=' + process.env.OWM_API_KEY)
-        .then(resp => resp.json())
+  return fetch(baseURL + `?id=${id}&` + 'APPID=' + process.env.WEATHER_API_KEY)
+  .then(resp => resp.json())
 }

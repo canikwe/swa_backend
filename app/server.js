@@ -1,14 +1,13 @@
 import express from 'express'
 import cors from 'cors'
-import bodyParser from 'body-parser' // Parse POST requests
 import { getByCity, getByLatLon, getByCityId } from './fetch' // Import fetch functions
 
 // Set up express to run on port 3000
 const app = express()
-const port = 3000
+const PORT = 3000
 
-// Apply body-parser to get params from POST requests
-app.use(bodyParser.json())
+// Apply express json parser to parse body from POST requests
+app.use(express.json())
 
 // Apply CORS exceptions for frontend API requests
 app.use(cors())
@@ -30,7 +29,7 @@ app.post('/weather', (req, res) => {
       getByCity(req.body.query)
       .then(resp => {
         console.log('Location case hit. No errors here')
-        res.send(resp)
+        res.status(200).json(resp)
       })
       .catch(console.log)
       break
@@ -38,13 +37,13 @@ app.post('/weather', (req, res) => {
       getByLatLon(req.body.query.lat, req.body.query.lon)
       .then(resp => {
         console.log('Coordinates case hit. No errors here')
-        res.send(resp)
+        res.status(200).json(resp)
       })
       .catch(console.log)
       break
     default:
       console.log(req.body)
-      res.send({msg: 'Case statements not hit. Nothing to see here'})
+      res.status(400).json({msg: 'Case statements not hit. Nothing to see here'})
   }
 })
 
@@ -65,13 +64,13 @@ app.get('/weather/:lat/:lon', (req, res) => {
   getByLatLon(req.params.lat, req.params.lon)
   .then(resp => {
     console.log('/weather/:lat/:lon route hit. No errors here')
-    res.send(resp)
+    res.status(200).json(resp)
   })
   .catch(console.log)
 })
 
-const server = app.listen(port, () => {
-  console.log(`Simple Weather App currently listening on port: ${port}`)
+const server = app.listen(PORT, () => {
+  console.log(`Simple Weather App currently listening on port: ${PORT}`)
 })
 
 process.on('SIGINT', () => {
