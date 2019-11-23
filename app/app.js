@@ -73,6 +73,12 @@ app.get('/weather/:lat/:lon', (req, res) => {
   .catch(console.log)
 })
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Simple Weather App currently listening on port: ${port}`)
+})
+
+process.on('SIGINT', () => {
+  console.log('\n Gracefully stopping...')
+  server.close()
+  console.log('\n Have a nice day!')
 })
