@@ -17,5 +17,9 @@ module.exports = {
   getByLatLon: (lat, lon) => {
     return fetch(baseURL + `lat=${lat}&lon=${lon}&` + 'APPID=' + process.env.OWM_API_KEY)
     .then(resp => resp.json())
+  },
+  getByCityId: (id) => {
+    return fetch(baseURL + `id=${id}&` + 'APPID=' + process.env.OWM_API_KEY)
+    .then(resp => resp.json())
   }
 }

@@ -1,9 +1,17 @@
 // Set up express to run on port 3000
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const port = 3000
 
+// Parse POST requests
+const bodyParser = require('body-parser')
 
+// Apply body-parser to get params from POST requests
+app.use(bodyParser.json())
+
+// Apply CORS exceptions for frontend API requests
+app.use(cors())
 
 // Import fetch functions
 const fetch = require('./fetch')
@@ -15,6 +23,22 @@ app.get('/', (req, res) => {
     { id: 2, message: 'Chine says hello!' },
     { id: 3, message: 'So does Shannon 😀' }
   ])
+})
+
+app.post('/weather', (req, res) => {
+  switch(req.body.type) {
+    case 'location':
+      fetch.getByCity(req.body.query)
+      .then(resp => {
+        console.log('No errors here')
+        res.send(resp)
+      })
+      .catch(console.log)
+      break
+    default:
+      console.log(req.body)
+      res.send({msg: 'sorry, nothing to see here'})
+  }
 })
 
 // Specific city is included in the URI path. API is queried for the *approximate* city
