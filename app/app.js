@@ -16,6 +16,7 @@ app.use(cors())
 // Import fetch functions
 const fetch = require('./fetch')
 
+// Root route to test connection
 app.get('/', (req, res) => {
   console.log(req.params)
   res.send([
@@ -25,10 +26,19 @@ app.get('/', (req, res) => {
   ])
 })
 
+// Single route to handle POST requests from frontend
 app.post('/weather', (req, res) => {
   switch(req.body.type) {
     case 'location':
       fetch.getByCity(req.body.query)
+      .then(resp => {
+        console.log('No errors here')
+        res.send(resp)
+      })
+      .catch(console.log)
+      break
+    case 'coordinates':
+      fetch.getByLatLon(req.body.query.lat, req.body.query.lon)
       .then(resp => {
         console.log('No errors here')
         res.send(resp)
@@ -52,6 +62,7 @@ app.get('/weather/:location', (req, res) => {
   .catch(console.log)
 })
 
+// Latitude and longitude is included in the URI.
 app.get('/weather/:lat/:lon', (req, res) => {
   console.log('lat/lon route')
   fetch.getByLatLon(req.params.lat, req.params.lon)

@@ -6,7 +6,7 @@ fetch.promise = Bluebird
 // Configure dotenv for environment variables
 require('dotenv').config()
 
-// Base URL for all fetch calls
+// Base URL for weather API fetch calls
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?'
 
 module.exports = { 
