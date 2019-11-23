@@ -2,9 +2,9 @@
   "name": "swa_backend",
   "version": "1.0.0",
   "description": "Backend for my Simple Weather App",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon app/app.js",
+    "start": "nodemon app/app.js --exec babel-node -e js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Chine Anikwe",
@@ -17,5 +17,10 @@
     "express": "^4.17.1",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1"
   }
 }

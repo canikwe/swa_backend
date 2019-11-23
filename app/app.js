@@ -1,20 +1,17 @@
-// Set up express to run on port 3000
-const express = require('express')
-const app = express()
-const cors = require('cors')
-const port = 3000
+import express from 'express'
+import cors from 'cors'
+import bodyParser from 'body-parser' // Parse POST requests
+import { getByCity, getByLatLon, getByCityId } from './fetch' // Import fetch functions
 
-// Parse POST requests
-const bodyParser = require('body-parser')
+// Set up express to run on port 3000
+const app = express()
+const port = 3000
 
 // Apply body-parser to get params from POST requests
 app.use(bodyParser.json())
 
 // Apply CORS exceptions for frontend API requests
 app.use(cors())
-
-// Import fetch functions
-const fetch = require('./fetch')
 
 // Root route to test connection
 app.get('/', (req, res) => {
@@ -30,7 +27,7 @@ app.get('/', (req, res) => {
 app.post('/weather', (req, res) => {
   switch(req.body.type) {
     case 'location':
-      fetch.getByCity(req.body.query)
+      getByCity(req.body.query)
       .then(resp => {
         console.log('Location case hit. No errors here')
         res.send(resp)
@@ -38,7 +35,7 @@ app.post('/weather', (req, res) => {
       .catch(console.log)
       break
     case 'coordinates':
-      fetch.getByLatLon(req.body.query.lat, req.body.query.lon)
+      getByLatLon(req.body.query.lat, req.body.query.lon)
       .then(resp => {
         console.log('Coordinates case hit. No errors here')
         res.send(resp)
@@ -54,7 +51,7 @@ app.post('/weather', (req, res) => {
 // Specific city is included in the URI path. API is queried for the *approximate* city
 app.get('/weather/:location', (req, res) => {
   console.log('Hit my query route!')
-  fetch.getByCity(req.params.location)
+  getByCity(req.params.location)
   .then(resp => {
     console.log('/weather/:location route hit. No errors here')
     res.send(resp)
@@ -65,7 +62,7 @@ app.get('/weather/:location', (req, res) => {
 // Latitude and longitude is included in the URI.
 app.get('/weather/:lat/:lon', (req, res) => {
   console.log('lat/lon route')
-  fetch.getByLatLon(req.params.lat, req.params.lon)
+  getByLatLon(req.params.lat, req.params.lon)
   .then(resp => {
     console.log('/weather/:lat/:lon route hit. No errors here')
     res.send(resp)

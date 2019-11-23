@@ -1,25 +1,27 @@
+import Bluebird from 'bluebird'
+import fetch from 'node-fetch'
+import dotenv from 'dotenv'
+
 // Set up fetch and promise handling for async API calls
-const Bluebird = require('bluebird')
-const fetch = require('node-fetch')
 fetch.promise = Bluebird
 
 // Configure dotenv for environment variables
-require('dotenv').config()
+dotenv.config()
 
 // Base URL for weather API fetch calls
 const baseURL = 'http://api.openweathermap.org/data/2.5/weather?'
 
-module.exports = { 
-  getByCity: location => {
-    return fetch(baseURL + `q=${location}&` + 'APPID=' + process.env.OWM_API_KEY)
+export const getByCity = location => {
+  return fetch(baseURL + `q=${location}&` + 'APPID=' + process.env.OWM_API_KEY)
     .then(resp => resp.json())
-  },
-  getByLatLon: (lat, lon) => {
+}
+
+export const getByLatLon = (lat, lon) => {
     return fetch(baseURL + `lat=${lat}&lon=${lon}&` + 'APPID=' + process.env.OWM_API_KEY)
-    .then(resp => resp.json())
-  },
-  getByCityId: (id) => {
-    return fetch(baseURL + `id=${id}&` + 'APPID=' + process.env.OWM_API_KEY)
-    .then(resp => resp.json())
-  }
+      .then(resp => resp.json())
+}
+
+export const getByCityId = (id) => {
+      return fetch(baseURL + `id=${id}&` + 'APPID=' + process.env.OWM_API_KEY)
+        .then(resp => resp.json())
 }
