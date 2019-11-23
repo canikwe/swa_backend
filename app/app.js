@@ -3,16 +3,10 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-// Set up fetch and promise handling for async API calls
-const Bluebird = require('bluebird')
-const fetch = require('node-fetch')
-fetch.promise = Bluebird
 
-// Configure dotenv for environment variables
-require('dotenv').config()
 
-// Base URL for all fetch calls
-const baseURL = 'http://api.openweathermap.org/data/2.5/weather?'
+// Import fetch functions
+const fetch = require('./fetch')
 
 app.get('/', (req, res) => {
   console.log(req.params)
@@ -23,10 +17,20 @@ app.get('/', (req, res) => {
   ])
 })
 
-app.get('/weather', (req, res) => {
-  console.log('Hit my weather route!')
-  fetch(baseURL + 'q=London&' + 'APPID=' + process.env.OWM_API_KEY)
-  .then(resp => resp.json())
+// Specific city is included in the URI path. API is queried for the *approximate* city
+app.get('/weather/:location', (req, res) => {
+  console.log('Hit my query route!')
+  fetch.getByCity(req.params.location)
+  .then(resp => {
+    console.log('No errors here')
+    res.send(resp)
+  })
+  .catch(console.log)
+})
+
+app.get('/weather/:lat/:lon', (req, res) => {
+  console.log('lat/lon route')
+  fetch.getByLatLon(req.params.lat, req.params.lon)
   .then(resp => {
     console.log('No errors here')
     res.send(resp)
