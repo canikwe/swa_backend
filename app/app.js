@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+require('dotenv').config()
+
 const Bluebird = require('bluebird')
 const fetch = require('node-fetch')
 fetch.promise = Bluebird
@@ -24,7 +26,6 @@ app.get('/weather', (req, res) => {
     res.send(resp)
   })
   .catch(console.log)
-  // res.send({message: 'Hit my weather route'})
 })
 
 app.listen(port, () => {
