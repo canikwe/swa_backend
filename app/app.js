@@ -1,12 +1,18 @@
+// Set up express to run on port 3000
 const express = require('express')
 const app = express()
 const port = 3000
 
-require('dotenv').config()
-
+// Set up fetch and promise handling for async API calls
 const Bluebird = require('bluebird')
 const fetch = require('node-fetch')
 fetch.promise = Bluebird
+
+// Configure dotenv for environment variables
+require('dotenv').config()
+
+// Base URL for all fetch calls
+const baseURL = 'http://api.openweathermap.org/data/2.5/weather?'
 
 app.get('/', (req, res) => {
   console.log(req.params)
@@ -19,7 +25,7 @@ app.get('/', (req, res) => {
 
 app.get('/weather', (req, res) => {
   console.log('Hit my weather route!')
-  fetch('https://www.metaweather.com/api/location/44418')
+  fetch(baseURL + 'q=London&' + 'APPID=' + process.env.OWM_API_KEY)
   .then(resp => resp.json())
   .then(resp => {
     console.log('No errors here')
