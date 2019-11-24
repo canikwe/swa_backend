@@ -2,10 +2,11 @@
   "name": "swa_backend",
   "version": "1.0.0",
   "description": "Backend for my Simple Weather App",
-  "main": "./app/server.js",
+  "main": "./server/server.js",
   "scripts": {
-    "start": "nodemon ./app/server.js --exec babel-node -e js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./server/server.js --exec babel-node -e js",
+    "debug": "DEBUG=express:* nodemon ./server/server.js --exec babel-node -e js"
   },
   "author": "Chine Anikwe",
   "license": "ISC",

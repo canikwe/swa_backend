@@ -12,10 +12,15 @@ app.use(express.json())
 // Apply CORS exceptions for frontend API requests
 app.use(cors())
 
+// Apply middleware to log method, path, and timestamp to the console
+app.use((req, res, next) => {
+  console.log("\x1b[36m", `${req.method} ${req.path} started at ${new Date()}`)
+  next()
+})
+
 // Root route to test connection
 app.get('/', (req, res) => {
-  console.log(req.params)
-  res.send([
+  res.status(200).json([
     { id: 1, message: 'Hello World!' },
     { id: 2, message: 'Chine says hello!' },
     { id: 3, message: 'So does Shannon 😀' }
@@ -42,7 +47,7 @@ app.post('/weather', (req, res) => {
       .catch(console.log)
       break
     default:
-      console.log(req.body)
+      console.log(`Response body ${res.body}`)
       res.status(400).json({msg: 'Case statements not hit. Nothing to see here'})
   }
 })
@@ -53,7 +58,7 @@ app.get('/weather/:location', (req, res) => {
   getByCity(req.params.location)
   .then(resp => {
     console.log('/weather/:location route hit. No errors here')
-    res.send(resp)
+    res.status(200).json(resp)
   })
   .catch(console.log)
 })
@@ -69,10 +74,18 @@ app.get('/weather/:lat/:lon', (req, res) => {
   .catch(console.log)
 })
 
+// Custom error handling middleware
+app.use((err, req, res) => {
+  console.error(req.body)
+  res.status(500).json(err.stack)
+})
+
+// Opens the server on the specified port
 const server = app.listen(PORT, () => {
   console.log(`Simple Weather App currently listening on port: ${PORT}`)
 })
 
+// Closes the server
 process.on('SIGINT', () => {
   console.log('\n Gracefully stopping...')
   server.close()
