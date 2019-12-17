@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { getByCity, getByLatLon, getByCityId } from './fetch' // Import fetch functions
+import { getByCity, getByLatLon, getByCityId, getCityInfo, searchCities } from './fetch' // Import fetch functions
 
 // Set up express to run on port 3000
 const app = express()
@@ -20,11 +20,22 @@ app.use((req, res, next) => {
 
 // Root route to test connection
 app.get('/', (req, res) => {
+
   res.status(200).json([
     { id: 1, message: 'Hello World!' },
     { id: 2, message: 'Chine says hello!' },
     { id: 3, message: 'So does Shannon 😀' }
   ])
+})
+
+app.get('/search/:location', (req, res) => {
+  searchCities(req.params.location)
+  .then(data => {
+    const cities = data.results.filter(c => c.components._type === 'city' || c.components._type === 'state')
+    console.log(cities, cities.length)
+
+    res.status(200).json(cities)
+  })
 })
 
 // Single route to handle POST requests from frontend
@@ -77,7 +88,8 @@ app.get('/weather/:lat/:lon', (req, res) => {
 // Custom error handling middleware
 app.use((err, req, res) => {
   console.error(req.body)
-  res.status(500).json(err.stack)
+  console.log(res)
+  // res.status(500).json(err.stack)
 })
 
 // Opens the server on the specified port
