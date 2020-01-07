@@ -40,6 +40,7 @@ app.get('/search/:location', (req, res) => {
 
 // Single route to handle POST requests from frontend
 app.post('/weather', (req, res) => {
+  console.log(req.body.type)
   switch(req.body.type) {
     case 'location':
       getByCity(req.body.query)
@@ -49,8 +50,8 @@ app.post('/weather', (req, res) => {
       })
       .catch(console.log)
       break
-    case 'coordinates':
-      getByLatLon(req.body.query.lat, req.body.query.lon)
+    case 'coord':
+      getByLatLon(req.body.query.lat, req.body.query.lng)
       .then(resp => {
         console.log('Coordinates case hit. No errors here')
         res.status(200).json(resp)
