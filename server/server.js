@@ -31,7 +31,23 @@ app.get('/', (req, res) => {
 app.get('/search/:location', (req, res) => {
   searchCities(req.params.location)
   .then(data => {
-    const cities = data.results.filter(c => c.components._type === 'city' || c.components._type === 'state')
+    const cities = data.results.filter(c => {
+      console.log(c.components)
+      switch (c.components._type) {
+        case 'city':
+          return true
+        case 'state':
+          return true
+        case 'village':
+          return true
+        case 'state_district':
+          return true
+        case 'village':
+          return true
+        default:
+          return false
+      }
+    })
     console.log(cities, cities.length)
 
     res.status(200).json(cities)
