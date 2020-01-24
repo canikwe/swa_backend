@@ -44,11 +44,15 @@ app.get('/search/:location', (req, res) => {
           return true
         case 'village':
           return true
+        case 'neighbourhood':
+          return true
+        case 'county':
+          return true
         default:
           return false
       }
     })
-    console.log(cities, cities.length)
+    console.log(`${cities.length} out of ${data.results.length} cities returned`)
 
     res.status(200).json(cities)
   })
