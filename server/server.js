@@ -4,7 +4,7 @@ import { getByCity, getByLatLon, getByCityId, getCityInfo, searchCities } from '
 
 // Set up express to run on port 3000
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 // Apply express json parser to parse body from POST requests
 app.use(express.json())
