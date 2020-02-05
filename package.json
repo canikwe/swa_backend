@@ -9,12 +9,14 @@
     "build-babel": "babel -d ./build ./server -s",
     "build": "npm run clean && npm run build-babel",
     "start": "npm run build && node ./build/server.js",
-    "development": "nodemon ./server/server.js --exec babel-node -e js",
+    "dev-start": "nodemon ./server/server.js --exec babel-node -e js",
     "debug": "DEBUG=express:* nodemon ./server/server.js --exec babel-node -e js"
   },
   "author": "Chine Anikwe",
   "license": "ISC",
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
     "bluebird": "^3.7.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -23,8 +25,6 @@
     "nodemon": "^1.19.4"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.1"
+    "babel-cli": "^6.26.0"
   }
 }
