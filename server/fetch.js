@@ -1,7 +1,6 @@
 import Bluebird from 'bluebird'
 import fetch from 'node-fetch'
 import dotenv from 'dotenv'
-import cityList from './city.list.json'
 
 // Set up fetch and promise handling for async API calls
 fetch.promise = Bluebird
