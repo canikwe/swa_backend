@@ -9,7 +9,7 @@
     "build-babel": "babel -d ./build ./server -s",
     "build": "npm run clean && npm run build-babel",
     "start": "npm run build && node ./build/server.js",
-    "dev-start": "nodemon ./server/server.js --exec babel-node -e js",
+    "development": "nodemon ./server/server.js --exec babel-node -e js",
     "debug": "DEBUG=express:* nodemon ./server/server.js --exec babel-node -e js"
   },
   "author": "Chine Anikwe",
